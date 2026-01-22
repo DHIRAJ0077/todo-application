@@ -8,9 +8,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Todo Backend is running ✅ Try /api/health");
-});
+
 
 app.get("/api/health", async (req, res) => {
   await pool.query("SELECT 1");
