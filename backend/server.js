@@ -8,8 +8,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Todo Backend is running ✅ Try /api/health");
+});
+
 app.get("/api/health", async (req, res) => {
-  const result = await pool.query("SELECT 1");
+  await pool.query("SELECT 1");
   res.json({ status: "ok", db: "connected" });
 });
 
