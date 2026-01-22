@@ -4,7 +4,7 @@ import { TodoForm } from './components/TodoForm'
 
 import { TodoList } from './components/TodoList'
 
-const API_URL = 'http://localhost:5000/api'
+const API_URL = 'https://todo-application-m8fy.onrender.com/api'
 
 function App() {
   const [todos, setTodos] = useState([]);
