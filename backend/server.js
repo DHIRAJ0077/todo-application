@@ -10,6 +10,11 @@ app.use(express.json());
 
 
 
+
+app.get("/", (req, res) => {
+  res.send("Todo Backend is running ✅ Try /api/health");
+});
+
 app.get("/api/health", async (req, res) => {
   await pool.query("SELECT 1");
   res.json({ status: "ok", db: "connected" });
