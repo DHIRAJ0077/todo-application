@@ -1,11 +1,11 @@
-import 'dotenv/config';
-import { createRequire } from 'module';
+import 'dotenv/config'
+import { PrismaClient } from '@prisma/client'
 
-const require = createRequire(import.meta.url);
-const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient()
 
-const prisma = new PrismaClient({
-  log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-});
+if (process.env.NODE_ENV === 'development') {
+  prisma.$on('query', (e) => console.log('Query:', e.query))
+  prisma.$on('error', (e) => console.log('Error:', e.message))
+}
 
-export default prisma;
+export default prisma
