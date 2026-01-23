@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch server.js",
+    "prestart": "prisma generate --schema=./prisma/schema.prisma",
     "start": "node server.js",
-    "build": "prisma generate",
-    "postinstall": "prisma generate"
+    "build": "prisma generate --schema=./prisma/schema.prisma",
+    "postinstall": "prisma generate --schema=./prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^7.3.0",
