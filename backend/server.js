@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Todo Backend is running ✅ Try /api/health");
+  res.send("Todo Backend is running /api/health");
 });
 
 app.get("/api/health", async (req, res) => {
@@ -80,7 +80,9 @@ app.delete("/api/todos/:id", async (req, res) => {
 
 const server = app.listen(PORT, () => console.log(`Running on port ${PORT}`));
 
-// Graceful shutdown
+
+
+// shut down
 process.on("SIGINT", async () => {
   console.log("\nShutting down gracefully...");
   await prisma.$disconnect();
@@ -90,11 +92,4 @@ process.on("SIGINT", async () => {
   });
 });
 
-process.on("SIGTERM", async () => {
-  console.log("\nShutting down gracefully...");
-  await prisma.$disconnect();
-  server.close(() => {
-    console.log("Server closed");
-    process.exit(0);
-  });
-});
+
