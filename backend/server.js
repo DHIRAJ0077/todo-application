@@ -1,4 +1,3 @@
-// imports
 import express from "express";
 import cors from "cors";
 import prisma from "./models/prisma.js";
@@ -8,19 +7,16 @@ import { fileURLToPath } from "url";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// dirname (ESM fix)
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// middleware
+
 app.use(cors());
 app.use(express.json());
 
-/* =========================
-   API ROUTES (FIRST)
-========================= */
 
-// health check
+
 app.get("/api/health", async (req, res) => {
   try {
     await prisma.$queryRaw`SELECT 1`;
@@ -30,7 +26,8 @@ app.get("/api/health", async (req, res) => {
   }
 });
 
-// get all todos
+
+
 app.get("/api/todos", async (req, res) => {
   try {
     const todos = await prisma.todo.findMany({
@@ -43,7 +40,7 @@ app.get("/api/todos", async (req, res) => {
   }
 });
 
-// create todo
+
 app.post("/api/todos", async (req, res) => {
   try {
     const { title } = req.body;
@@ -59,7 +56,7 @@ app.post("/api/todos", async (req, res) => {
   }
 });
 
-// update todo (toggle completed)
+
 app.put("/api/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -77,7 +74,7 @@ app.put("/api/todos/:id", async (req, res) => {
   }
 });
 
-// delete todo
+
 app.delete("/api/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -95,20 +92,20 @@ app.delete("/api/todos/:id", async (req, res) => {
 
 
 
-// serve frontend build
+
 app.use(express.static(path.join(__dirname, "dist")));
 
-// SPA fallback
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-// start server
+
 const server = app.listen(PORT, () =>
-  console.log(`🚀 Running on port ${PORT}`)
+  console.log(` Running on port ${PORT}`)
 );
 
-// graceful shutdown
+
 process.on("SIGINT", async () => {
   console.log("\nShutting down gracefully...");
   await prisma.$disconnect();
